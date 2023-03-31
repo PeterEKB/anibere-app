@@ -1,0 +1,18 @@
+<div id="heading">
+  <h5>Welcome, {{(user$ | async)!.name!.first}}!</h5>
+  <div id="upcoming">
+    <h5>No upcoming appointments</h5>
+  </div>
+</div>
+<div id="collapsibles">
+  <app-collapsible title="Appointment History" materialIcon="history">
+    <div class="container">
+      <app-appointment-card></app-appointment-card>
+      <hr>
+      <app-appointment-card></app-appointment-card>
+      <hr>
+      <app-appointment-card></app-appointment-card>
+    </div>
+  </app-collapsible>
+  <app-collapsible title="Payment Methods" materialIcon="style"></app-collapsible>
+</div>

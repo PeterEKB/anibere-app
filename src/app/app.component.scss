@@ -1,0 +1,10 @@
+app-login {
+  position: absolute;
+  inset: 0 0;
+  transform: translateX(0);
+  transition: transform 500ms 700ms ease-in-out;
+  z-index: 100;
+}
+app-login.slide {
+  transform: translateX(-100%);
+}

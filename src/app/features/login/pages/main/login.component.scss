@@ -1,0 +1,45 @@
+#background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, hsl(0, 55%, 55%) 0%, hsl(0, 75%, 30%) 100%);
+}
+#contentArea {
+    position: absolute;
+    display: grid;
+    grid-template: 
+        '. . .' 10px
+        '. c .' 1fr
+        '. . .' 10px/10px 1fr 10px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, hsl(0, 55%, 55%) 0%, hsl(0, 75%, 30%) 100%);
+}
+#contentCon {
+    grid-area: c;
+    display: grid;
+    grid-template-rows: 1fr max(min(59%, 450px), 50%);
+}
+#contentTop {
+    display: grid;
+    grid-template: 
+        '. . .' 1fr
+        '. puck .' auto
+        '. . .' 1fr/1fr auto 1fr;
+}
+#profileImg {
+    grid-area: puck;
+    width: 250px;
+}
+#contentBottom {
+    display: grid;
+    grid-template: 
+        '. . .' 10px
+        '. form .' 1fr
+        '. . .' 10px/10px 1fr 10px;
+}
+#form {
+    grid-area: form;
+    width: 100%;
+    height: 100%;
+}

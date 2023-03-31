@@ -1,0 +1,7 @@
+<div id="content">
+  <ng-container *ngFor="let category of categories$|async">
+    <button class="{{category.sku === selected? 'selected':''}}" attr.sku="{{category.sku}}" (click)="select(category.sku)">
+      <h2>{{category.title|titlecase}}</h2>
+    </button>
+  </ng-container>
+</div>

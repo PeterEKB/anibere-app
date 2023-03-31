@@ -1,0 +1,60 @@
+<div id="form">
+  <div id="header">
+    <h3>Sign In</h3>
+  </div>
+  <div id="body">
+    <div class="inputGroup">
+      <label for="">User</label>
+      <ng-container *ngIf="user.id; else emailElse">
+        <div id="name" class="input">
+          <h1>{{user.name?.full}}</h1>
+        </div>
+      </ng-container>
+    </div>
+    <div class="inputGroup">
+      <label for="">Password</label>
+      <input type="password" placeholder="••••••••" (keyup)="validatePassword($event)" [ngClass]="passInClasses">
+    </div>
+    <div class="inputGroup">
+      <div id="forgotPass">
+        <p>Forgot password</p>
+      </div>
+      <div id="btn1">
+        <app-full-btn [colors]="{primary: 'var(--blue)', secondary: 'var(--deep-blue)'}"
+          [deactivate]="validateSignIn()" (click)="signInCTA()">
+          Sign in
+        </app-full-btn>
+      </div>
+      <div id="split">————— or —————</div>
+      <div id="splitMinify">
+        <p></p>
+        <p>— or —></p>
+        <ng-container *ngIf="user.id; else txtElse">
+          <p id="signUp">Sign out</p>
+        </ng-container>
+      </div>
+      <div id="btn2">
+        <ng-container *ngIf="user.id; else btnElse">
+          <app-full-btn [colors]="{primary: 'var(--red)', secondary: 'var(--deep-red)'}">
+            Sign out
+          </app-full-btn>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--^ Template Else Statements -->
+
+<ng-template #emailElse>
+  <input type="text" placeholder="example@email.com" (keyup)="validateUsername($event)">
+</ng-template>
+<ng-template #txtElse>
+  <p id="signUp">Sign up</p>
+</ng-template>
+<ng-template #btnElse>
+  <app-full-btn [colors]="{primary: 'var(--light-blue)', secondary: 'var(--hot-blue)'}">
+    Sign up
+  </app-full-btn>
+</ng-template>

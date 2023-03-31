@@ -1,0 +1,42 @@
+@import "src/app/styles/mixins";
+:host {
+  --border-ratio: 1000px;
+
+  display: block;
+  position: relative;
+  aspect-ratio: 1/1;
+  background: hsl(0, 0%, 80%);
+  border: 10px solid white;
+  border-radius: var(--border-ratio);
+  overflow: hidden;
+  box-shadow: 0px 2px 4px 2px hsla(0, 0%, 0%, 0.25);
+}
+#imgCon,
+#imgCon::after,
+#cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-ratio);
+}
+#imgCon::after {
+  content: "";
+  box-shadow: inset 2px 2px 4px hsla(0, 0%, 0%, 0.25);
+}
+img {
+  width: 100%;
+  min-height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  @include center;
+}
+#cover {
+  background-color: white;
+  border: 2px solid hsl(0, 0%, 80%);
+  transform-origin: 100% 100%;
+  rotate: 0deg;
+  transition: rotate 500ms ease-in-out;
+}
+#cover.rotated {
+  rotate: 90deg;
+}

@@ -1,0 +1,29 @@
+:host{
+  display: grid;
+  grid-template: 
+  'header' 70px
+  'body' 1fr
+  'nav' 75px/100%;
+  height: 100%;
+}
+header {
+  grid-area: header;
+}
+#body {
+  grid-area: body;
+  background-color: hsl(0, 100%, 95%);
+  overflow: hidden;
+}
+app-nav {
+  grid-area: nav;
+}
+app-header {
+  border: 1px solid;
+}
+app-nav {
+  border: 1px solid;
+}
+app-header, app-nav {
+  border-color: hsl(0, 0%, 80%);
+  background-color: white;
+}

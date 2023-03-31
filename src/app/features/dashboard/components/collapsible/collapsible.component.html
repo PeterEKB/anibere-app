@@ -1,0 +1,17 @@
+<div #container id="contentArea" class="collapse">
+  <div #heading id="heading">
+    <div id="left"><span class="icon material-symbols-outlined"> {{icon}} </span></div>
+    <div id="center" class="title">
+      <h5>{{title}}</h5>
+    </div>
+    <div id="right">
+      <span *ngIf="collapsed; else unfold" class="icon material-symbols-outlined"> unfold_more </span>
+      <ng-template #unfold>
+        <span class="icon material-symbols-outlined"> unfold_less </span>
+      </ng-template>
+    </div>
+  </div>
+  <div #body id="body">
+    <ng-content></ng-content>
+  </div>
+</div>

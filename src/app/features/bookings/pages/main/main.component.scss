@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  height: 100%;
+  background-color: white;
+}
+#template {
+  display: grid;
+  grid-template-rows: 50px 1fr 70px;
+  height: 100%;
+}
+#content {
+  border: 1px solid hsl(0, 0%, 80%);
+  overflow: hidden;
+}
+#nav {
+  padding: 10px;
+}

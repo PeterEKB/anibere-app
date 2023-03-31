@@ -1,0 +1,26 @@
+@import "src/app/styles/mixins";
+:host {
+  height: 100%;
+  display: block;
+  padding: 30px 20px;
+  overflow-y: auto;
+}
+
+#heading {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 200px;
+}
+#upcoming {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h5 {
+    color: hsla(360, 100%, 80%, 1);
+  }
+}
+#collapsibles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

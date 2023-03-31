@@ -1,0 +1,105 @@
+* {
+  font-family: "Inter";
+}
+#contentContainer {
+  background-color: white;
+  border-left: 10px solid hsl(0, 0%, 70%);
+}
+#contentContainer.upcoming {
+  border-color: var(--blue);
+
+  #label {
+    color: var(--blue);
+  }
+  #endTime {
+    color: hsl(0, 0%, 85%);
+  }
+}
+#contentContainer.missed {
+  border-color: var(--deep-red);
+
+  #label {
+    color: hsla(360, 100%, 40%, 1);
+  }
+}
+#contentContainer.rescheduled {
+  border-color: var(--orange);
+
+  #label {
+    color: var(--orange);
+  }
+}
+#contentContainer.fulfilled {
+  border-color: var(--green);
+
+  #label {
+    color: var(--green);
+  }
+}
+
+#contentArea,
+#content,
+#date,
+#info,
+#timeDetails {
+  display: flex;
+  flex: 1;
+}
+#date,
+#info {
+  flex-direction: column;
+}
+
+#contentArea {
+  padding: 10px;
+}
+#content {
+  overflow: hidden;
+}
+#date {
+  flex: none;
+  // width: 100px;
+  padding-right: 10px;
+  border-right: 1px solid hsl(0, 0%, 70%);
+  color: var(--purple);
+  text-align: center;
+}
+#day h2 {
+  color: var(--light-blue);
+  font-size: clamp(40px, 14vw, 60px);
+}
+#style {
+  padding: 0 10px;
+  border-bottom: 1px solid hsl(0, 0%, 50%);
+  font-size: 18px;
+  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  /* autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+  
+  .expanded {
+    -webkit-line-clamp: 2;
+  }
+}
+#info {
+  padding: 10px;
+  overflow: hidden;
+}
+#startTime,
+#endTime,
+#label {
+  flex: 1;
+  text-align: center;
+}
+#timeDetails {
+  padding: 10px 0 0;
+  font-size: clamp(20px, 6vw, 24px);
+  align-items: center;
+}
+#label {
+  font-size: 12px;
+  font-style: italic;
+}

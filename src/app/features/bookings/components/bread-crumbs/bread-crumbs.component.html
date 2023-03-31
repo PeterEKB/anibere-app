@@ -1,0 +1,23 @@
+<div id="content">
+  <ng-container *ngIf="format.back; else hideBack">
+    <span class="material-symbols-outlined" (click)="goBack()">arrow_back_ios</span>
+  </ng-container>
+  <ng-template #hideBack>
+    <span class="material-symbols-outlined hide" (click)="goBack()">arrow_back_ios</span>
+  </ng-template>
+  <div id="page">
+    <h2>{{format.category | titlecase}}</h2>
+  </div>
+  <ng-container *ngIf="format.first?.active">
+    <span class="material-symbols-outlined">arrow_right_alt</span>
+    <a [routerLink]="format.first?.link">
+      <h4>{{format.first?.name | titlecase}}</h4>
+    </a>
+  </ng-container>
+  <ng-container *ngIf="format.second?.active">
+    <span class="material-symbols-outlined">arrow_right_alt</span>
+    <a [routerLink]="format.second?.link">
+      <h4>{{format.second?.name | titlecase}}</h4>
+    </a>
+  </ng-container>
+</div>

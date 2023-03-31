@@ -1,0 +1,25 @@
+#content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 100px;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25), 1px 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+[routerLink] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: hsl(0, 0%, 40%);
+  text-align: center;
+  line-height: 0;
+}
+[routerLink].active {
+  background: var(--light-red);
+  border-radius: 100px;
+  color: var(--red);
+}

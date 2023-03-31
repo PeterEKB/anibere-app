@@ -1,0 +1,20 @@
+<ng-container *ngIf="(services$ | async) as services; else default">
+
+  <div id="content">
+
+    <ng-container *ngFor="let service of services">
+      <app-style-card [details]=service></app-style-card>
+    </ng-container>
+
+  </div>
+
+</ng-container>
+
+
+<ng-template #default>
+  <div id="default">
+    No services yet.
+    <br>
+    Check back later!
+  </div>
+</ng-template>

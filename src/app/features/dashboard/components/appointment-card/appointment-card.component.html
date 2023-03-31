@@ -1,0 +1,22 @@
+<div id="contentContainer" [class]="cardInfo.status">
+  <div id="contentArea">
+    <div id="content">
+      <div id="date">
+        <div id="day">
+          <h2>{{cardInfo.date | date: 'dd'}}</h2>
+        </div>
+        <div id="month">
+          <h2>{{cardInfo.date | date: 'MMM'}}</h2>
+        </div>
+      </div>
+      <div id="info">
+        <div id="style">{{cardInfo.service.name | titlecase}}</div>
+        <div id="timeDetails">
+          <div id="startTime">{{cardInfo.date | date: 'HH:mm'}}</div>
+          <div id="endTime">{{endTime}}</div>
+          <div id="label">{{cardInfo.status | titlecase}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
