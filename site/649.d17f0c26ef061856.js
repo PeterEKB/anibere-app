@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksite=self.webpackChunksite||[]).push([[649],{649:(a,e,l)=>{l.r(e),l.d(e,{ProfileModule:()=>r});var n=l(6895),u=l(8256);let r=(()=>{class o{}return o.\u0275fac=function(t){return new(t||o)},o.\u0275mod=u.oAB({type:o}),o.\u0275inj=u.cJS({imports:[n.ez]}),o})()}}]);
