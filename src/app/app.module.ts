@@ -11,6 +11,7 @@ import { MainFormComponent } from './features/login/components/main-form/main-fo
 import { FullBtnComponent } from './core/components/full-btn/full-btn.component';
 import { HeaderComponent } from './core/components/header/header.component';
 import { NavComponent } from './core/components/nav/nav.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { NavComponent } from './core/components/nav/nav.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    IonicModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

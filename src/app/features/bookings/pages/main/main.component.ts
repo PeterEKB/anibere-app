@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { breadFormat } from '../../models/breadCrumbs';
+import { CalendarComponent } from '../calendar/calendar.component';
+import { CategoriesComponent } from '../categories/categories.component';
 
 @Component({
   selector: 'app-main',
@@ -9,6 +11,7 @@ import { breadFormat } from '../../models/breadCrumbs';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit, OnDestroy {
+  component = CategoriesComponent
   notifier$: Subject<null> = new Subject();
   private urlArray: string[] = [''];
   bCrumbsFormat: breadFormat = {

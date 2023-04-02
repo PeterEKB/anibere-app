@@ -11,6 +11,7 @@ import { StylesComponent } from './pages/styles/styles.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 import { StyleCardComponent } from './components/style-card/style-card.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,6 @@ import { StyleCardComponent } from './components/style-card/style-card.component
     ConfirmationComponent,
     StyleCardComponent,
   ],
-  imports: [CommonModule, BookingsRoutingModule],
+  imports: [CommonModule, BookingsRoutingModule, IonicModule.forRoot({})],
 })
 export class BookingsModule {}
