@@ -2,9 +2,9 @@
   <div id="breadCrumbs">
     <app-bread-crumbs [format]="bCrumbsFormat"></app-bread-crumbs>
   </div>
-  <ion-content id="content">
-    <ion-nav [root]="component"></ion-nav>
-  </ion-content>
+  <div id="content">
+    <router-outlet></router-outlet>
+  </div>
   <div id="nav">
     <app-nav></app-nav>
   </div>

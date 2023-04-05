@@ -17,22 +17,23 @@ import { fromEvent, Observable, Subject, takeUntil } from 'rxjs';
 export class CollapsibleComponent implements OnInit, AfterViewInit, OnDestroy {
   private defaultHeight = 50;
   public collapsed: boolean = true;
-  notifier$: Subject<null> = new Subject();
-
+  
   @Input('materialIcon')
   icon: string = 'token';
   @Input()
   title: string = 'Title';
   @Input()
   collapse: boolean = true;
-
+  
   @ViewChild('container')
   private container!: ElementRef;
   @ViewChild('heading')
   private heading!: ElementRef;
   @ViewChild('body')
   private body!: ElementRef;
-
+  
+  private notifier$: Subject<null> = new Subject();
+  
   private headingClick$!: Observable<Event>;
 
   constructor() {}
