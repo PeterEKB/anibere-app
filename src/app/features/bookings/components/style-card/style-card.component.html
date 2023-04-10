@@ -7,12 +7,17 @@
         </div>
         <div id="description">
           <ng-container *ngFor="let _selection of selectedVariants | keyvalue">
-          <ng-container *ngIf="$any(_selection) as selection">
-            <div class="discriptor"
-            [style.order]="selection.value.detailOrder">
-              <h4>{{selection.value.title}}</h4>
-            </div>
-          </ng-container>
+            <ng-container *ngIf="$any(_selection) as selection">
+              <div class="descriptor" [style.order]="selection.value.detailOrder"
+                *ngIf="selection.value.altValue.length === 0 || selection.value.altValue[selection.value.order]">
+                <ng-container *ngIf="selection.value.altValue.length === 0;else altTitle">
+                  <h4>{{selection.value.title|titlecase}}</h4>
+                </ng-container>
+                <ng-template #altTitle>
+                  <h4>{{selection.value.altValue[selection.value.order]|titlecase}}</h4>
+                </ng-template>
+              </div>
+            </ng-container>
           </ng-container>
         </div>
         <div id="details">

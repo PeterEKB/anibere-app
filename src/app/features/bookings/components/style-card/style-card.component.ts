@@ -89,20 +89,23 @@ export class StyleCardComponent implements OnInit {
   private _service(raw: Service) {
     this.serviceVal = raw;
 
-    const variants: Variant[]|undefined = raw.variants
+    const variants: Variant[] | undefined = raw.variants;
 
     if (raw.variants) {
       raw.variants.forEach((variant, index) => {
         if (variant.options) {
-
-          variant.options.forEach((option, index)=>{
+          variant.options.forEach((option, index) => {
             if (+option.order === 0 || index === 0) {
               this.selectedVariants = {
                 ...this.selectedVariants,
-                [variant.type]: {...option, detailOrder: variant.order},
+                [variant.type]: {
+                  ...option,
+                  detailOrder: variant.order,
+                  altValue: variant.altVal?[variant.altVal?.false, variant.altVal?.true]:[],
+                },
               };
             }
-          })
+          });
         }
       });
     }

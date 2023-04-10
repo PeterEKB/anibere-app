@@ -5,6 +5,7 @@
 #left,
 #details,
 #variants,
+#description,
 .variant,
 .options,
 .option {
@@ -40,6 +41,7 @@
   overflow: hidden;
 }
 #title h2 {
+  margin: 10px 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -47,9 +49,12 @@
 #description {
   flex: 1;
   display: flex;
+  column-gap: 10px;
+  flex-wrap: wrap;
 }
 #description h4 {
   align-self: center;
+  margin: 0;
   color: hsl(0, 0%, 40%);
   font-size: 17px;
   line-height: 20px;
@@ -82,10 +87,14 @@
 #tray {
   height: max-content;
   padding: 10px;
+  font-size: 14px;
 }
 #tray .options .selected {
   outline: 2px solid hsla(360, 100%, 40%, 1);
   outline-offset: -2px;
+}
+.title {
+  white-space: nowrap;
 }
 #variants,
 .variant {
