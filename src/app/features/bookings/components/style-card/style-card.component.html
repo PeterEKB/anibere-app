@@ -1,29 +1,56 @@
-  <div #style id="style">
-    <div #card id="card">
+<div #style id="style" [class.selected]="isSelected">
+  <div #card id="cardContainer">
+    <div id="card">
       <div id="left">
         <div id="title">
-          <h2>{{rawServiceData.title | titlecase}} fdsfs</h2>
+          <h2>{{service.title | titlecase}} fdsfs</h2>
         </div>
         <div id="description">
-          <h4>24in • Medium • Hair included
-          Co-Wash</h4>
+          <ng-container *ngFor="let _selection of selectedVariants | keyvalue">
+          <ng-container *ngIf="$any(_selection) as selection">
+            <div class="discriptor"
+            [style.order]="selection.value.detailOrder">
+              <h4>{{selection.value.title}}</h4>
+            </div>
+          </ng-container>
+          </ng-container>
         </div>
         <div id="details">
           <div id="time">
             (2h 50m)
           </div>
-          <div id="price">
-            Total: $180
-          </div>
+          <ng-container *ngIf="(totalPrice$|async) as totalPrice">
+            <div id="price" *ngIf="totalPrice !== -1; else priceAltText">
+              Total: ${{totalPrice}}
+            </div>
+            <ng-template #priceAltText>Call for pricing</ng-template>
+          </ng-container>
         </div>
       </div>
       <div id="right">
         <div id="image">
-          <img *ngIf="rawServiceData.images" src="{{rawServiceData.images[0]}}" alt="Image of {{rawServiceData.title}}">
+          <img *ngIf="service.images" src="{{service.images[0]}}" alt="Image of {{service.title}}">
         </div>
       </div>
     </div>
-    <div #tray *ngIf="rawServiceData.variants" id="tray">
-      hi
+  </div>
+  <div #tray *ngIf="service.variants" id="tray">
+    <div id="variants">
+      <ng-container *ngFor="let variant of service.variants">
+        <div class="variant" [style.order]="variant.order">
+          <div class="title">
+            {{variant.type | titlecase}}:
+          </div>
+          <div class="options">
+            <ng-container *ngFor="let option of variant.options">
+              <div class="option" [class.selected]="selectedVariants[variant.type] === option"
+                [style.order]="option.order">
+                {{option.title | titlecase}}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </div>
+</div>

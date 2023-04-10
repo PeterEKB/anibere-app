@@ -1,21 +1,39 @@
+:host {
+  --style-border-width: 1px;
+}
 #card,
 #left,
-#details {
+#details,
+#variants,
+.variant,
+.options,
+.option {
   display: flex;
 }
-#left {
+#left,
+#variants {
   flex-direction: column;
 }
 #style {
-  border: 1px solid hsl(0, 0%, 70%);
+  border: var(--style-border-width) solid hsl(0, 0%, 70%);
   border-radius: 5px;
   box-shadow: 1px 2px 4px hsla(0, 0%, 0%, 0.25);
   overflow: hidden;
+}
+#style.selected {
+  #card {
+    outline: 2px solid hsla(360, 100%, 40%, 1);
+    outline-offset: -2px;
+  }
+}
+#cardContainer {
+  height: calc(140px - var(--style-border-width));
 }
 #card {
   gap: 10px;
   height: 100%;
   padding: 10px;
+  border-radius: 5px;
 }
 #left {
   flex: 1;
@@ -59,4 +77,28 @@
   width: 100%;
   object-fit: cover;
   transform: translateY(-5%);
+}
+
+#tray {
+  height: max-content;
+  padding: 10px;
+}
+#tray .options .selected {
+  outline: 2px solid hsla(360, 100%, 40%, 1);
+  outline-offset: -2px;
+}
+#variants,
+.variant {
+  gap: 10px;
+}
+.variant {
+  align-items: center;
+}
+.options {
+  width: 100%;
+}
+.option {
+  flex: 1;
+  justify-content: center;
+  padding: 5px;
 }

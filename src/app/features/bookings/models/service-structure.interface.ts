@@ -5,6 +5,7 @@ export interface Service {
   title: string;
   images?: string[];
   variants?: Variant[];
+  price?: number;
 }
 export interface FormattedService {
   id: string;
@@ -24,8 +25,20 @@ export interface Variant {
   id: string;
   svc_id: string;
   type: string;
+  order: number;
+  altVal?: AltVal;
+  options?: Options[];
+  images?: string[];
+}
+export interface Options {
+  id: string;
+  var_id: string;
   title: string;
   price: number,
   order: number,
   images?: string[];
+}
+export interface AltVal {
+  true: string;
+  false: string
 }
