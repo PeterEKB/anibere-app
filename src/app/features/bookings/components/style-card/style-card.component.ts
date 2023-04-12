@@ -37,7 +37,7 @@ export class StyleCardComponent implements OnInit {
     return this.tray.nativeElement.offsetHeight;
   }
   public get isSelected() {
-    return true;
+    return this._isSelected;
   }
   public get service(): Service {
     return this.serviceVal;
@@ -50,13 +50,15 @@ export class StyleCardComponent implements OnInit {
   @ViewChild('tray') tray!: ElementRef;
 
   @Input()
-  set isSelected(val: boolean) {}
+  set select(val: boolean) {
+    this._isSelected == val;
+  }
   @Input('details')
   set service(val: Service) {
     this._service(val);
   }
 
-  @Output() clicked = new EventEmitter();
+  @Output() clicked: EventEmitter<{event: string,value: boolean}> = new EventEmitter();
 
   constructor() {}
 
@@ -80,6 +82,9 @@ export class StyleCardComponent implements OnInit {
     this.$totalPrice.next(price);
     console.log(price);
   }
+  emitClick(){
+    this.clicked.emit({event: 'click', value: true})
+  }
 
   //~~~~~~~~~~~~ helpers
 
@@ -101,7 +106,9 @@ export class StyleCardComponent implements OnInit {
                 [variant.type]: {
                   ...option,
                   detailOrder: variant.order,
-                  altValue: variant.altVal?[variant.altVal?.false, variant.altVal?.true]:[],
+                  altValue: variant.altVal
+                    ? [variant.altVal?.false, variant.altVal?.true]
+                    : [],
                 },
               };
             }

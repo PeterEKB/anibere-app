@@ -41,4 +41,7 @@ export class StylesComponent implements OnInit, OnDestroy {
     this.notifier$.next(null);
     this.notifier$.complete();
   }
+  styleEventHandler(event:{event: string,value: boolean}){
+
+  }
 }

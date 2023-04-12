@@ -20,6 +20,7 @@
   border-radius: 5px;
   box-shadow: 1px 2px 4px hsla(0, 0%, 0%, 0.25);
   overflow: hidden;
+  transition: height 200ms;
 }
 #style.selected {
   #card {
@@ -28,13 +29,13 @@
   }
 }
 #cardContainer {
-  height: calc(140px - var(--style-border-width));
+  height: calc(140px - 2 * var(--style-border-width));
 }
 #card {
   gap: 10px;
   height: 100%;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 4px;
 }
 #left {
   flex: 1;
@@ -110,4 +111,6 @@
   flex: 1;
   justify-content: center;
   padding: 5px;
+  outline: 2px solid hsl(0, 0%, 80%);
+  outline-offset: -2px;
 }

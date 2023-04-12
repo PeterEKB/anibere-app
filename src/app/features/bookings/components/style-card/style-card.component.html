@@ -1,5 +1,5 @@
 <div #style id="style" [class.selected]="isSelected">
-  <div #card id="cardContainer">
+  <div #card id="cardContainer" (click)="emitClick()">
     <div id="card">
       <div id="left">
         <div id="title">
@@ -48,7 +48,7 @@
           </div>
           <div class="options">
             <ng-container *ngFor="let option of variant.options">
-              <div class="option" [class.selected]="selectedVariants[variant.type] === option"
+              <div class="option" [class.selected]="selectedVariants[variant.type].title === option.title"
                 [style.order]="option.order">
                 {{option.title | titlecase}}
               </div>

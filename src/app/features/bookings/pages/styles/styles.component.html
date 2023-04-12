@@ -3,7 +3,7 @@
   <div id="content">
 
     <ng-container *ngFor="let service of services">
-      <app-style-card [details]=service></app-style-card>
+      <app-style-card [attr.id]="service.sku" [details]=service (clicked)="styleEventHandler($event)"></app-style-card>
     </ng-container>
 
   </div>
