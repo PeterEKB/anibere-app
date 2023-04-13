@@ -14,6 +14,7 @@ export class StylesComponent implements OnInit, OnDestroy {
   private services: Service[] | null = null;
   private servicesSub: BehaviorSubject<Service[] | null> = new BehaviorSubject(this.services);
   services$: Observable<Service[] | null> = this.servicesSub;
+  selectedService!: string;
 
   constructor(
     private router: ActivatedRoute,
@@ -41,7 +42,11 @@ export class StylesComponent implements OnInit, OnDestroy {
     this.notifier$.next(null);
     this.notifier$.complete();
   }
-  styleEventHandler(event:{event: string,value: boolean}){
-
+  styleEventHandler(event:{event: string, value: string}){
+    switch(event.event){
+      case 'click': this.selectedService = event.value; 
+      console.log(this.selectedService, event.value)
+      break;
+    }
   }
 }

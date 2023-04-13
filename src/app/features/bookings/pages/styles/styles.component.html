@@ -3,7 +3,8 @@
   <div id="content">
 
     <ng-container *ngFor="let service of services">
-      <app-style-card [attr.id]="service.sku" [details]=service (clicked)="styleEventHandler($event)"></app-style-card>
+      {{service.sku}} | {{selectedService}}
+      <app-style-card [attr.id]="service.sku" [details]=service [select]="service.sku === selectedService" (clicked)="styleEventHandler($event)"></app-style-card>
     </ng-container>
 
   </div>

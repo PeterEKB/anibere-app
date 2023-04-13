@@ -7,7 +7,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, fromEvent } from 'rxjs';
 import {
   Service,
   Variant,
@@ -51,14 +51,15 @@ export class StyleCardComponent implements OnInit {
 
   @Input()
   set select(val: boolean) {
-    this._isSelected == val;
+    this._isSelected = val;
+    console.log(this.isSelected)
   }
   @Input('details')
   set service(val: Service) {
     this._service(val);
   }
 
-  @Output() clicked: EventEmitter<{event: string,value: boolean}> = new EventEmitter();
+  @Output() clicked: EventEmitter<{event: string,value: string}> = new EventEmitter();
 
   constructor() {}
 
@@ -68,6 +69,10 @@ export class StyleCardComponent implements OnInit {
       this.isSelected && this.tray
         ? this.defaultHeight + this.trayHeight
         : this.defaultHeight;
+        this.cardClick$ = fromEvent(this.card.nativeElement, 'click')
+        this.cardClick$.subscribe(_=>{
+          this.emitClick()
+        })
   }
 
   private calculatePrice() {
@@ -83,7 +88,7 @@ export class StyleCardComponent implements OnInit {
     console.log(price);
   }
   emitClick(){
-    this.clicked.emit({event: 'click', value: true})
+    this.clicked.emit({event: 'click', value: this.service.sku})
   }
 
   //~~~~~~~~~~~~ helpers
