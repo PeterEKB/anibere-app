@@ -8,7 +8,7 @@
         <div id="description">
           <ng-container *ngFor="let _selection of selectedVariants | keyvalue">
             <ng-container *ngIf="$any(_selection) as selection">
-              <div class="descriptor" [style.order]="selection.value.detailOrder"
+              <div #descriptor class="descriptor" [style.order]="selection.value.detailOrder"
                 *ngIf="selection.value.altValue.length === 0 || selection.value.altValue[selection.value.order]">
                 <ng-container *ngIf="selection.value.altValue.length === 0;else altTitle">
                   <h4>{{selection.value.title|titlecase}}</h4>
@@ -49,7 +49,7 @@
           <div class="options">
             <ng-container *ngFor="let option of variant.options">
               <div class="option" [class.selected]="selectedVariants[variant.type].title === option.title"
-                [style.order]="option.order">
+                [style.order]="option.order" (click)="variantSelected(variant,option)">
                 {{option.title | titlecase}}
               </div>
             </ng-container>

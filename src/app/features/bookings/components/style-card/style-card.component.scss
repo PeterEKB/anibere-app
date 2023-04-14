@@ -20,7 +20,7 @@
   border-radius: 5px;
   box-shadow: 1px 2px 4px hsla(0, 0%, 0%, 0.25);
   overflow: hidden;
-  transition: height 200ms;
+  transition: height 250ms ease-in-out;
 }
 #style.selected {
   #card {
@@ -53,12 +53,23 @@
   column-gap: 10px;
   flex-wrap: wrap;
 }
+#description .descriptor::first-line {
+  color:red;
+}
 #description h4 {
   align-self: center;
   margin: 0;
   color: hsl(0, 0%, 40%);
   font-size: 17px;
   line-height: 20px;
+}
+.descriptor {
+  display: flex;
+  gap: 10px;
+  white-space: nowrap;
+}
+.descriptor.seperate-left::before {
+  content: '•';
 }
 #details {
   justify-content: space-between;
@@ -91,8 +102,7 @@
   font-size: 14px;
 }
 #tray .options .selected {
-  outline: 2px solid hsla(360, 100%, 40%, 1);
-  outline-offset: -2px;
+  border: 2px solid hsla(360, 100%, 40%, 1);
 }
 .title {
   white-space: nowrap;
@@ -111,6 +121,11 @@
   flex: 1;
   justify-content: center;
   padding: 5px;
-  outline: 2px solid hsl(0, 0%, 80%);
-  outline-offset: -2px;
+  border: 2px solid hsl(0, 0%, 80%);
+}
+.option:not(:last-child) {
+  border-right: none;
+}
+.option.selected+.option {
+  border-left: none;
 }

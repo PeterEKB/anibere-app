@@ -12,9 +12,12 @@ import { Service } from '../../models/service-structure.interface';
 export class StylesComponent implements OnInit, OnDestroy {
   notifier$: Subject<null> = new Subject();
   private services: Service[] | null = null;
-  private servicesSub: BehaviorSubject<Service[] | null> = new BehaviorSubject(this.services);
+  private servicesSub: BehaviorSubject<Service[] | null> = new BehaviorSubject(
+    this.services
+  );
   services$: Observable<Service[] | null> = this.servicesSub;
   selectedService!: string;
+  expandSelectedService: boolean = true;
 
   constructor(
     private router: ActivatedRoute,
@@ -30,11 +33,11 @@ export class StylesComponent implements OnInit, OnDestroy {
         .getServices(params['category'])
         .pipe(takeUntil(this.notifier$))
         .subscribe((val) => {
-          console.log(val)
-          this.services = val
-          if(typeof this.services !== 'string')
-          this.servicesSub.next(this.services);
-          console.log(val)
+          console.log(val);
+          this.services = val;
+          if (typeof this.services !== 'string')
+            this.servicesSub.next(this.services);
+          console.log(val);
         });
     });
   }
@@ -42,11 +45,12 @@ export class StylesComponent implements OnInit, OnDestroy {
     this.notifier$.next(null);
     this.notifier$.complete();
   }
-  styleEventHandler(event:{event: string, value: string}){
-    switch(event.event){
-      case 'click': this.selectedService = event.value; 
-      console.log(this.selectedService, event.value)
-      break;
+  styleEventHandler(event: { event: string; value: string }) {
+    switch (event.event) {
+      case 'click':
+        this.selectedService = event.value;
+        console.log(this.selectedService, event.value);
+        break;
     }
   }
 }
