@@ -17,16 +17,16 @@ export class BookingService {
     false
   );
   private selectedVariantsSub: BehaviorSubject<any> = new BehaviorSubject({});
-  private isSelected_VariantsSub: BehaviorSubject<boolean> = new BehaviorSubject(
-    false
-  );
+  private isSelected_VariantsSub: BehaviorSubject<boolean> =
+    new BehaviorSubject(false);
 
   public isSelected_Category$: Observable<boolean> =
     this.isSelected_CategorySub;
   public selectedCategory$: Observable<string> = this.selectedCategorySub;
   public isSelected_Service$: Observable<boolean> = this.isSelected_ServiceSub;
   public selectedService$: Observable<string> = this.selectedServiceSub;
-  public isSelected_Variants$: Observable<boolean> = this.isSelected_VariantsSub;
+  public isSelected_Variants$: Observable<boolean> =
+    this.isSelected_VariantsSub;
   public selectedVariants$: Observable<string> = this.selectedVariantsSub;
 
   constructor(

@@ -96,9 +96,16 @@ export class StyleCardComponent implements OnInit {
 
     this.cardClick$ = fromEvent(this.card.nativeElement, 'click');
 
-    this.cardClick$.subscribe((_) => {
+    this.cardClick$.pipe(takeUntil(this.notifier$)).subscribe((_) => {
       this.emitClick();
     });
+  }
+  ngOnDestroy(): void {
+    this.stopObs();
+  }
+  stopObs(){
+    this.notifier$.next(null);
+    this.notifier$.complete();
   }
 
   variantSelected(variant: Variant, option: Option) {
@@ -202,7 +209,6 @@ export class StyleCardComponent implements OnInit {
         })
       )
       .subscribe((selectedVariants) => {
-        console.log(selectedVariants);
         if (selectedVariants) {
           this.selectedVariants = selectedVariants;
         } else {

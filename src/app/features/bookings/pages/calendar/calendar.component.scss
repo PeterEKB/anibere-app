@@ -1,0 +1,65 @@
+#content {
+  height: 100%;
+  padding: 10px;
+}
+.row,
+.col {
+  display: flex;
+}
+.col {
+  flex-direction: column;
+}
+#monthNav,
+#monthNav *,
+#daysOfWeek {
+  justify-content: space-around;
+}
+#monthNav {
+  padding: 15px 0;
+}
+#daysOfWeek {
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+.dayOfWeek {
+  flex: 0 0 calc(100% / 7);
+  justify-content: center;
+}
+#calendar {
+  flex: 1;
+}
+#days {
+  flex: 1;
+  flex-wrap: wrap;
+}
+.day {
+  flex: 0 0 calc(100% / 7);
+  padding: 0 10px 10px 10px;
+}
+.inactive {
+  background-color: hsla(0, 0%, 90%, 1);
+  .slots {
+    display: none;
+  }
+}
+.today {
+  padding: 0;
+  background-color: var(--light-red);
+  justify-content: center;
+  .slots {
+    display: none;
+  }
+}
+.dayTitle {
+  padding: 10px;
+  text-align: center;
+}
+.slots {
+  flex: 1;
+  gap: 3px;
+}
+.slot {
+  flex: 1;
+  background-color: var(--green);
+  border-radius: 100px;
+}

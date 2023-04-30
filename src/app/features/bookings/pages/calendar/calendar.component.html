@@ -1,1 +1,45 @@
-<p>calendar works!</p>
+<div id="content" class="col">
+
+  <div id="monthNav" class="row">
+    <div id="monthPrev" class="col"><span class="material-symbols-outlined">
+        chevron_Left
+      </span></div>
+    <div id="month" class="col">
+      <h2>{{activeDate | date: "MMMM"}}</h2>
+    </div>
+    <div id="monthNext" class="col"><span class="material-symbols-outlined">
+        chevron_right
+      </span></div>
+  </div>
+  <div id="calendar" class="col">
+    <div id="daysOfWeek" class="row">
+      <ng-container *ngFor="let day of daysOfWeek; index as index">
+        <div class="dayOfWeek row">
+          <h2>{{daysOfWeek[index]}}</h2>
+        </div>
+      </ng-container>
+    </div>
+    <div id="days" class="row">
+      <ng-container *ngFor="let _ of calendar.firstDayOfMonth | array">
+        <div class="day"></div>
+
+      </ng-container>
+      <ng-container #activeDay *ngFor="let _ of calendar.daysInMonth | array; index as dayIndex">
+        <div class="day col"
+          [class.inactive]="dayIndex + 1 < currentDateInfo.today && currentDateInfo.month === calendar.month"
+          [class.today]="dayIndex + 1 === currentDateInfo.today">
+          <div class="dayTitle">
+            <h6>{{dayIndex + 1}}</h6>
+          </div>
+          <div class="slots col">
+            <ng-container *ngFor="let _ of 5 | array">
+              <div class="slot"></div>
+            </ng-container>
+          </div>
+        </div>
+
+      </ng-container>
+
+    </div>
+  </div>
+</div>
