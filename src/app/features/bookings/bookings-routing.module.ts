@@ -7,6 +7,7 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
 import { MainComponent } from './pages/main/main.component';
 import { StylesComponent } from './pages/styles/styles.component';
 import { ServicesComponent } from './pages/services/services.component';
+import { CalendarGuard } from 'src/app/core/guards/calendar.guard';
 
 const routes: Routes = [
   {
@@ -40,7 +41,8 @@ const routes: Routes = [
       },
       {
         path: 'calendar',
-        component: CalendarComponent
+        component: CalendarComponent,
+        canActivate: [CalendarGuard]
       },
       {
         path: 'confirm',

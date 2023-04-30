@@ -35,28 +35,28 @@ export class MainComponent implements OnInit, OnDestroy {
       },
       second: {
         name: 'style',
-        link: 'styles/style',
+        // link: '../styles/style',
         active: false,
       },
     },
     //^ For Calendar state [1]
     {
-      back: false,
+      back: true,
       category: 'calendar',
       first: {
         name: 'day',
-        link: 'calendar/day',
+        link: 'calendar',
         active: true,
       },
       second: {
         name: 'time',
-        link: 'calendar/time',
+        // link: '../calendar/time',
         active: false,
       },
     },
     //^ For Confirmation state [2]
     {
-      back: false,
+      back: true,
       category: 'confirm',
       first: {
         name: 'review',
@@ -137,7 +137,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
   private useDayFormat() {
     this.bCrumbsFormat = { ...this.crumbFormats[1] };
-    this.bCrumbsFormat.back = false;
+    this.bCrumbsFormat.back = true;
     this.bCrumbsFormat.second!.active = false;
   }
   private useTimeFormat() {
@@ -147,7 +147,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
   private useReviewFormat() {
     this.bCrumbsFormat = { ...this.crumbFormats[2] };
-    this.bCrumbsFormat.back = false;
+    this.bCrumbsFormat.back = true;
     this.bCrumbsFormat.second!.active = false;
   }
   private useFinalizeFormat() {

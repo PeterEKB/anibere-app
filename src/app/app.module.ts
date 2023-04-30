@@ -8,10 +8,10 @@ import { LayoutComponent } from './core/components/layout/layout.component';
 import { LoginComponent } from './features/login/pages/main/login.component';
 import { ProfilePuckComponent } from './core/components/profile-puck/profile-puck.component';
 import { MainFormComponent } from './features/login/components/main-form/main-form.component';
-import { FullBtnComponent } from './core/components/full-btn/full-btn.component';
 import { HeaderComponent } from './core/components/header/header.component';
 import { NavComponent } from './core/components/nav/nav.component';
 import { IonicModule } from '@ionic/angular';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,17 +20,17 @@ import { IonicModule } from '@ionic/angular';
     LayoutComponent,
     ProfilePuckComponent,
     MainFormComponent,
-    FullBtnComponent,
     HeaderComponent,
     NavComponent,
   ],
   imports: [
+    SharedModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     IonicModule.forRoot(),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

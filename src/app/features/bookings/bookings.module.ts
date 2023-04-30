@@ -12,6 +12,7 @@ import { CalendarComponent } from './pages/calendar/calendar.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 import { StyleCardComponent } from './components/style-card/style-card.component';
 import { IonicModule } from '@ionic/angular';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,6 @@ import { IonicModule } from '@ionic/angular';
     ConfirmationComponent,
     StyleCardComponent,
   ],
-  imports: [CommonModule, BookingsRoutingModule, IonicModule.forRoot({})],
+  imports: [CommonModule, BookingsRoutingModule, SharedModule, IonicModule.forRoot({})],
 })
 export class BookingsModule {}

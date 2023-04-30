@@ -1,9 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
-import { filter } from 'rxjs';
-import { CalendarComponent } from '../../pages/calendar/calendar.component';
-import { CategoriesComponent } from '../../pages/categories/categories.component';
-import { ConfirmationComponent } from '../../pages/confirmation/confirmation.component';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, Observable } from 'rxjs';
+import { CalendarGuard } from 'src/app/core/guards/calendar.guard';
 
 @Component({
   selector: 'app-nav',
@@ -12,22 +10,19 @@ import { ConfirmationComponent } from '../../pages/confirmation/confirmation.com
 })
 export class NavComponent implements OnInit {
   currentPage = 'styles';
-  componentList = {
-    confirm: ConfirmationComponent,
-  };
-  calendar = CalendarComponent
-  styles = CategoriesComponent
+  canActivate$?: Observable<boolean>;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private g_calendar: CalendarGuard) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event) => {
         this.currentPage = (event as NavigationEnd).urlAfterRedirects.split(
           '/'
         )[2];
-        console.log(this.currentPage)
       });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.canActivate$ = this.g_calendar.canActivate$
+  }
 }

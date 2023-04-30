@@ -1,11 +1,11 @@
 <div id="content">
-  <a routerLink="styles" routerLinkActive="active">
+  <a routerLink="styles" routerLinkActive="active" [class.disableLink]="false">
     <h2>Styles</h2>
   </a>
-  <a routerLink="calendar" routerLinkActive="active">
+  <a routerLink="calendar" routerLinkActive="active" [class.disableLink]="!(canActivate$ | async)">
     <h2>Calendar</h2>
   </a>
-  <a routerLink="confirm" routerLinkActive="active">
+  <a routerLink="confirm" routerLinkActive="active" [class.disableLink]="false">
     <h2>Confirm</h2>
   </a>
 </div>

@@ -6,6 +6,6 @@ export interface breadFormat {
 }
 export interface breadLinkDetails {
     name: string;
-    link: string;
-    active: boolean;
+    link?: string;
+    active?: boolean;
 }

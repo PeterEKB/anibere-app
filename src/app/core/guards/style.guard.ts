@@ -7,7 +7,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable, take } from 'rxjs';
-import { BookingService } from '../services/booking.service';
+import { BookingCategoriesService } from 'src/app/features/bookings/services/booking-categories.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ import { BookingService } from '../services/booking.service';
 export class StyleGuard implements CanActivate {
   canAccess!: UrlTree | boolean;
 
-  constructor(private s_booking: BookingService, private router: Router) {}
+  constructor(private s_booking: BookingCategoriesService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,

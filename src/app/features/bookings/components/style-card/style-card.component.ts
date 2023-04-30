@@ -5,17 +5,25 @@ import {
   Input,
   OnInit,
   Output,
-  Query,
-  QueryList,
   ViewChild,
-  ViewChildren,
 } from '@angular/core';
-import { BehaviorSubject, Observable, fromEvent } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  BehaviorSubject,
+  Observable,
+  fromEvent,
+  takeUntil,
+  Subject,
+  take,
+  switchMap,
+  of,
+} from 'rxjs';
 import {
   Service,
   Variant,
-  Options,
+  Option,
 } from '../../models/service-structure.interface';
+import { BookingStyleService } from '../../services/booking-style.service';
 
 @Component({
   selector: 'app-style-card',
@@ -23,14 +31,14 @@ import {
   styleUrls: ['./style-card.component.scss'],
 })
 export class StyleCardComponent implements OnInit {
-  private defaultHeight = 140;
+  private defaultHeight = 150;
   private serviceVal!: Service;
   private _isSelected: boolean = false;
   private _expand: boolean = false;
 
+  private notifier$: Subject<null> = new Subject();
   private $totalPrice: BehaviorSubject<number> = new BehaviorSubject(0);
   private cardClick$!: Observable<Event>;
-  private cardResize$!: Observable<Event>;
 
   public trayState: 'expand' | 'collapse' = 'collapse';
   public selectedVariants: any = {};
@@ -57,7 +65,6 @@ export class StyleCardComponent implements OnInit {
   @ViewChild('style') container!: ElementRef;
   @ViewChild('card') card!: ElementRef;
   @ViewChild('tray') tray!: ElementRef;
-  @ViewChildren('descriptor') descriptor!: QueryList<ElementRef>;
 
   @Input()
   set expand(val: boolean) {
@@ -73,43 +80,46 @@ export class StyleCardComponent implements OnInit {
     this._service(val);
   }
 
-  @Output() clicked: EventEmitter<{ event: string; value: string }> =
+  @Output() clicked: EventEmitter<{ event: string; value: any }> =
     new EventEmitter();
 
-  constructor() {}
+  constructor(
+    private s_style: BookingStyleService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {}
   ngAfterViewInit(): void {
+    this.card.nativeElement.style.height = `${this.defaultHeight - 1.5}px`;
     this.trayInit();
-    this.seperateDescriptors();
 
     this.cardClick$ = fromEvent(this.card.nativeElement, 'click');
-    this.cardResize$ = fromEvent(this.card.nativeElement, 'resize');
 
     this.cardClick$.subscribe((_) => {
       this.emitClick();
-      console.log('card clicked');
-    });
-    this.cardResize$.subscribe((_) => {
-      this.seperateDescriptors();
     });
   }
 
-  seperateDescriptors() {
-    this.descriptor.forEach((_element) => {
-      let element = _element.nativeElement,
-        left = element.offsetLeft;
-
-      if (left === 32) {
-        // element.classList.remove('seperate-left');
-      } else {
-      console.log(element,left);
-        element.classList.add('seperate-left');
-      }
-    });
+  variantSelected(variant: Variant, option: Option) {
+    this.setVariant(variant, option);
+    this.calculatePrice();
+  }
+  setVariant(variant: Variant, option: Option) {
+    this.selectedVariants[variant.type] = {
+      ...option,
+      detailOrder: variant.order,
+      altValue: variant.altVal
+        ? [variant.altVal?.false, variant.altVal?.true]
+        : [],
+    };
+    return true;
   }
   emitClick() {
-    this.clicked.emit({ event: 'click', value: this.service.sku });
+    this.clicked.emit({
+      event: 'click',
+      value: { sku: this.service.sku, selectedVariants: this.selectedVariants },
+    });
   }
   trayInit() {
     this.expand && this.tray
@@ -126,7 +136,6 @@ export class StyleCardComponent implements OnInit {
       arr = Object.keys(obj),
       price = this._calculatePriceReducer(arr, obj) || this.service.price || -1;
     this.$totalPrice.next(price);
-    console.log(price);
   }
   private expandTray() {
     this.setHostHeight = this.defaultHeight + this.trayHeight;
@@ -163,21 +172,9 @@ export class StyleCardComponent implements OnInit {
         break;
     }
   }
-  variantSelected(variant: Variant, option: Options) {
-    this.setVariant(variant, option);
-    this.seperateDescriptors();
-  }
-  setVariant(variant: Variant, option: Options) {
-    this.selectedVariants = {
-      ...this.selectedVariants,
-      [variant.type]: {
-        ...option,
-        detailOrder: variant.order,
-        altValue: variant.altVal
-          ? [variant.altVal?.false, variant.altVal?.true]
-          : [],
-      },
-    };
+  commitSelections() {
+    this.s_style.setSelected(this.service, this.selectedVariants);
+    this.router.navigate([`bookings/calendar`], { relativeTo: null });
   }
 
   //~~~~~~~~~~~~ helpers
@@ -188,7 +185,6 @@ export class StyleCardComponent implements OnInit {
     }, 0);
   }
   private set _setHostHeight(val: number) {
-    console.log(this.container);
     if (this.container) {
       this.container.nativeElement.style.height = val + 'px';
     }
@@ -196,19 +192,81 @@ export class StyleCardComponent implements OnInit {
   private _service(raw: Service) {
     this.serviceVal = raw;
 
-    if (raw.variants) {
-      raw.variants.forEach((variant, index) => {
-        if (variant.options) {
-          variant.options.forEach((option, index) => {
-            if (+option.order === 0 || index === 0) {
-              this.setVariant(variant, option);
-            }
-          });
+    this.s_style.selectedService$
+      .pipe(
+        take(1),
+        switchMap((selected) => {
+          if (selected && selected.sku === raw.sku) {
+            return this.s_style.selectedVariants$;
+          } else return of(null);
+        })
+      )
+      .subscribe((selectedVariants) => {
+        console.log(selectedVariants);
+        if (selectedVariants) {
+          this.selectedVariants = selectedVariants;
+        } else {
+          if (raw.variants) {
+            raw.variants.forEach((variant, index) => {
+              if (variant.options) {
+                variant.options.forEach((option, index) => {
+                  if (+option.order === 0 || index === 0) {
+                    this.setVariant(variant, option);
+                  }
+                });
+              }
+            });
+          }
         }
       });
-    }
 
-    console.log('selected: ', this.selectedVariants);
     this.calculatePrice();
   }
+
+  // Experimental
+  /*
+
+// Seperate descriptors with "•" if the descriptor isn't
+// the first in the row.
+
+
+  // private cardResize$!: Observable<Event>;
+
+  // @ViewChildren('descriptor') descriptor!: QueryList<ElementRef>;
+
+  // ngAfterViewInit() {
+    // this.cardResize$ = fromEvent(this.card.nativeElement, 'resize');
+    // if (this.tray) this.seperateDescriptors();
+    // this.cardResize$.subscribe((_) => {
+      // this.seperateDescriptors();
+    // });
+  // }
+
+  // variantSelected(variant: Variant, option: Option) {
+  //   let variantSet = this.setVariant(variant, option);
+  //   this.calculatePrice();
+    // asyncScheduler.schedule(() => {
+    //   this.seperateDescriptors();
+    // });
+  // }
+  
+
+  seperateDescriptors() {
+    this.descriptor.forEach((_element,index) => {
+      let element = _element.nativeElement,
+        left = Math.floor(element.offsetLeft),
+        parentLeft = Math.floor(
+          element.parentElement.getBoundingClientRect().left
+        );
+
+        if (left === parentLeft) {
+        console.log('first',index, left, parentLeft);
+        this.renderer.addClass(element, 'first-in-row');
+      } else {
+        console.log('not first',index, left, parentLeft);
+        this.renderer.removeClass(element, 'first-in-row');
+      }
+    });
+  }
+  */
 }

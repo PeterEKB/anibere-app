@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { map, take } from 'rxjs/operators';
 import { User } from '../models/user';
-import { UserAPIService } from './apis/user-api.service';
+import { UserAPIService } from '../../features/bookings/services/apis/user-api.service';
 
 @Injectable({
   providedIn: 'root',

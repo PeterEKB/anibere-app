@@ -14,7 +14,7 @@ import { BookingApiService } from './apis/booking-api.service';
 @Injectable({
   providedIn: 'root',
 })
-export class BookingService {
+export class BookingCategoriesService {
   private selectedSub: BehaviorSubject<string> = new BehaviorSubject('');
   private categories: Category[] = [];
   private categoriesSub: BehaviorSubject<Category[]> = new BehaviorSubject(
@@ -31,7 +31,6 @@ export class BookingService {
     this.selectedSub.next(val);
   }
   getServices(sku: string) {
-    this.setSelected(sku);
     let cached = false,
       index = this.categories.findIndex((curr) => {
         if (curr.sku === sku) {
@@ -43,7 +42,7 @@ export class BookingService {
       });
 
     if (cached)
-      return from([this.categories[index].services]).pipe(tap(console.log));
+      return from([this.categories[index].services]);
     return this.a_booking.getStyles(sku).pipe(
       take(1),
       tap((val) => {

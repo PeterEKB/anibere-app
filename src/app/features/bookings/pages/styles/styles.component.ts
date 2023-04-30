@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
-import { BookingService } from 'src/app/core/services/booking.service';
+import { BookingCategoriesService } from '../../services/booking-categories.service';
 import { Service } from '../../models/service-structure.interface';
+import { BookingStyleService } from '../../services/booking-style.service';
 
 @Component({
   selector: 'app-styles',
@@ -10,18 +11,24 @@ import { Service } from '../../models/service-structure.interface';
   styleUrls: ['./styles.component.scss'],
 })
 export class StylesComponent implements OnInit, OnDestroy {
-  notifier$: Subject<null> = new Subject();
+  // ~~~~~~ Variables ~~~~~~
+  public expandSelectedService: boolean = false;
+  public selectedService!: any;
+
+  // ~~~~~~ Subjects ~~~~~~
+  private notifier$: Subject<null> = new Subject();
   private services: Service[] | null = null;
   private servicesSub: BehaviorSubject<Service[] | null> = new BehaviorSubject(
     this.services
   );
-  services$: Observable<Service[] | null> = this.servicesSub;
-  selectedService!: string;
-  expandSelectedService: boolean = true;
+
+  // ~~~~~~ Observables ~~~~~~
+  public services$: Observable<Service[] | null> = this.servicesSub;
 
   constructor(
     private router: ActivatedRoute,
-    private s_booking: BookingService
+    private s_booking: BookingCategoriesService,
+    private s_style: BookingStyleService
   ) {}
   ngOnDestroy(): void {
     this.stopObs();
@@ -33,24 +40,37 @@ export class StylesComponent implements OnInit, OnDestroy {
         .getServices(params['category'])
         .pipe(takeUntil(this.notifier$))
         .subscribe((val) => {
-          console.log(val);
-          this.services = val;
+          this.services = (val as Service[]);
           if (typeof this.services !== 'string')
             this.servicesSub.next(this.services);
-          console.log(val);
         });
     });
+    this.s_style.selectedService$
+    .pipe(takeUntil(this.notifier$))
+    .subscribe(selected=>{
+      this.selectedService = selected?selected:{ sku: '', selectedVariants: {} }
+    })
   }
   stopObs() {
     this.notifier$.next(null);
     this.notifier$.complete();
   }
-  styleEventHandler(event: { event: string; value: string }) {
+  styleEventHandler(event: { event: string; value: any }) {
     switch (event.event) {
       case 'click':
-        this.selectedService = event.value;
-        console.log(this.selectedService, event.value);
+        this._styleClickEvent(event.value);
         break;
+      case 'expand':
     }
+  }
+
+  // ~~~~~~ Helpers  ~~~~~~
+
+  _styleClickEvent(value: any) {
+    if (value.sku === this.selectedService.sku && this.selectedService.sku)
+      this.expandSelectedService = !this.expandSelectedService;
+    else this.expandSelectedService = true;
+
+    this.selectedService = value;
   }
 }

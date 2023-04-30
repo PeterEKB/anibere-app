@@ -1,5 +1,5 @@
 <div #style id="style" [class.selected]="isSelected">
-  <div #card id="cardContainer" (click)="emitClick()">
+  <div #card id="cardContainer">
     <div id="card">
       <div id="left">
         <div id="title">
@@ -12,6 +12,7 @@
                 *ngIf="selection.value.altValue.length === 0 || selection.value.altValue[selection.value.order]">
                 <ng-container *ngIf="selection.value.altValue.length === 0;else altTitle">
                   <h4>{{selection.value.title|titlecase}}</h4>
+                  <!-- <div class="seperator" [style.order]="-1">•</div> -->
                 </ng-container>
                 <ng-template #altTitle>
                   <h4>{{selection.value.altValue[selection.value.order]|titlecase}}</h4>
@@ -56,6 +57,9 @@
           </div>
         </div>
       </ng-container>
+    </div>
+    <div id="continue">
+      <app-full-btn [colors]="{primary: 'var(--blue)'}" (click)="commitSelections()">Continue</app-full-btn>
     </div>
   </div>
 </div>

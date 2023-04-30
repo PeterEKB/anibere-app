@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, take, takeUntil } from 'rxjs';
-import { BookingService } from 'src/app/core/services/booking.service';
 import { Category } from '../../models/service-structure.interface';
+import { BookingCategoriesService } from '../../services/booking-categories.service';
 
 @Component({
   selector: 'app-categories',
@@ -16,7 +16,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   private notifier$ = new Subject();
 
   constructor(
-    private s_booking: BookingService,
+    private s_booking: BookingCategoriesService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
@@ -35,8 +35,8 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   select(sku: string) {
-    // this.s_booking.setSelected(sku);
     this.s_booking.getServices(sku).pipe(take(1)).subscribe(() => {
+    this.s_booking.setSelected(sku);
       this.router.navigate([`../${sku}`], {
         relativeTo: this.activatedRoute,
       });

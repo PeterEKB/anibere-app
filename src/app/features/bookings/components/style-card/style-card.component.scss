@@ -6,12 +6,14 @@
 #details,
 #variants,
 #description,
+#tray,
 .variant,
 .options,
 .option {
   display: flex;
 }
 #left,
+#tray,
 #variants {
   flex-direction: column;
 }
@@ -20,7 +22,8 @@
   border-radius: 5px;
   box-shadow: 1px 2px 4px hsla(0, 0%, 0%, 0.25);
   overflow: hidden;
-  transition: height 250ms ease-in-out;
+  outline: 0px solid hsla(360, 100%, 40%, 1);
+  transition: height 250ms ease-in-out, outline 250ms;
 }
 #style.selected {
   #card {
@@ -28,11 +31,8 @@
     outline-offset: -2px;
   }
 }
-#cardContainer {
-  height: calc(140px - 2 * var(--style-border-width));
-}
 #card {
-  gap: 10px;
+  gap: 15px;
   height: 100%;
   padding: 10px;
   border-radius: 4px;
@@ -42,7 +42,7 @@
   overflow: hidden;
 }
 #title h2 {
-  margin: 10px 0;
+  margin: 10px 0 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -50,11 +50,9 @@
 #description {
   flex: 1;
   display: flex;
-  column-gap: 10px;
+  column-gap: 15px;
   flex-wrap: wrap;
-}
-#description .descriptor::first-line {
-  color:red;
+  align-content: center;
 }
 #description h4 {
   align-self: center;
@@ -66,10 +64,18 @@
 .descriptor {
   display: flex;
   gap: 10px;
+  height: fit-content;
   white-space: nowrap;
 }
-.descriptor.seperate-left::before {
-  content: '•';
+.descriptor > .seperator {
+  visibility: visible;
+}
+.descriptor.first-in-row {
+  gap: 0;
+}
+.descriptor.first-in-row > .seperator {
+  visibility: collapse;
+  width: 0;
 }
 #details {
   justify-content: space-between;
@@ -78,6 +84,7 @@
 }
 #right {
   flex-shrink: 0;
+  aspect-ratio: 1;
   width: fit-content;
 }
 #image {
@@ -97,6 +104,7 @@
 }
 
 #tray {
+  gap: 10px;
   height: max-content;
   padding: 10px;
   font-size: 14px;

@@ -1,10 +1,9 @@
 <ng-container *ngIf="(services$ | async) as services; else default">
-
   <div id="content">
 
     <ng-container *ngFor="let service of services">
-      <app-style-card [attr.id]="service.sku" [details]=service [select]="service.sku === selectedService"
-        [expand]="service.sku === selectedService && expandSelectedService"
+      <app-style-card [attr.id]="service.sku" [details]=service [select]="service.sku === selectedService.sku"
+        [expand]="service.sku === selectedService.sku && expandSelectedService"
         (clicked)="styleEventHandler($event)"></app-style-card>
     </ng-container>
 

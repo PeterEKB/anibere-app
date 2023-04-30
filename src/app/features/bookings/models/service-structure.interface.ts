@@ -27,10 +27,16 @@ export interface Variant {
   type: string;
   order: number;
   altVal?: AltVal;
-  options?: Options[];
+  options?: Option[];
   images?: string[];
 }
-export interface Options {
+export interface VariantAlt extends Option {
+  detailOrder?: number;
+  altValue?: Array<string>;
+} 
+
+
+export interface Option {
   id: string;
   var_id: string;
   title: string;
