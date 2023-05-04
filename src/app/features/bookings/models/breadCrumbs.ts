@@ -3,6 +3,7 @@ export interface breadFormat {
   category: string;
   first?: breadLinkDetails;
   second?: breadLinkDetails;
+  calendar?: boolean;
 }
 export interface breadLinkDetails {
     name: string;

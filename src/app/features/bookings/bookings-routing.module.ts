@@ -8,6 +8,7 @@ import { MainComponent } from './pages/main/main.component';
 import { StylesComponent } from './pages/styles/styles.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { CalendarGuard } from 'src/app/core/guards/calendar.guard';
+import { TimeComponent } from './pages/time/time.component';
 
 const routes: Routes = [
   {
@@ -17,16 +18,15 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'styles',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'styles',
-        component: ServicesComponent,
         children: [
           {
             path: '',
             redirectTo: 'categories',
-            pathMatch: 'full'
+            pathMatch: 'full',
           },
           {
             path: 'categories',
@@ -41,13 +41,27 @@ const routes: Routes = [
       },
       {
         path: 'calendar',
-        component: CalendarComponent,
-        canActivate: [CalendarGuard]
+        canActivate: [CalendarGuard],
+        children: [
+          {
+            path: '',
+            redirectTo: 'day',
+            pathMatch: 'full',
+          },
+          {
+            path: 'day',
+            component: CalendarComponent,
+          },
+          {
+            path: 'time',
+            component: TimeComponent,
+          },
+        ],
       },
       {
         path: 'confirm',
-        component: ConfirmationComponent
-      }
+        component: ConfirmationComponent,
+      },
     ],
   },
 ];

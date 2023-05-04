@@ -14,45 +14,11 @@
 #daysOfWeek {
   justify-content: space-around;
 }
-#monthNav {
-  padding: 15px 0;
+.monthPagination {
+  padding: 15px;
 }
-#daysOfWeek {
-  flex-wrap: wrap;
-  padding: 10px 0;
-}
-.dayOfWeek {
-  flex: 0 0 calc(100% / 7);
-  justify-content: center;
-}
-#calendar {
-  flex: 1;
-}
-#days {
-  flex: 1;
-  flex-wrap: wrap;
-}
-.day {
-  flex: 0 0 calc(100% / 7);
-  padding: 0 10px 10px 10px;
-}
-.inactive {
-  background-color: hsla(0, 0%, 90%, 1);
-  .slots {
-    display: none;
-  }
-}
-.today {
-  padding: 0;
-  background-color: var(--light-red);
-  justify-content: center;
-  .slots {
-    display: none;
-  }
-}
-.dayTitle {
-  padding: 10px;
-  text-align: center;
+.monthPagination.disabled .icon {
+  color: var(--disabled-bg);
 }
 .slots {
   flex: 1;
@@ -62,4 +28,91 @@
   flex: 1;
   background-color: var(--green);
   border-radius: 100px;
+}
+#calendar {
+  flex: 1;
+  #daysOfWeek {
+    flex-wrap: wrap;
+    padding: 10px 0;
+  }
+  .dayOfWeek {
+    flex: 0 0 calc(100% / 7);
+    justify-content: center;
+  }
+  #days {
+    flex: 1;
+    flex-wrap: wrap;
+  }
+  .day {
+    flex: 0 0 calc(100% / 7);
+    padding: 0 10px 10px 10px;
+  }
+  .inactive {
+    background-color: var(--disabled-bg);
+    .slots {
+      display: none;
+    }
+  }
+  .today {
+    padding: 0;
+    background-color: var(--light-red);
+    justify-content: center;
+    .slots {
+      display: none;
+    }
+  }
+  .dayTitle {
+    padding: 10px 0;
+    text-align: center;
+  }
+}
+
+#dayView {
+  gap: 10px;
+  padding: 10px;
+  overflow-y: auto;
+
+  .cardCon {
+    padding: 0 10px;
+  }
+  .card {
+    height: 100px;
+    padding: 10px;
+    border: 1px solid hsl(0, 0%, 85%);
+    border-radius: 10px;
+  }
+  .date {
+    flex: 0 1 min-content;
+    justify-content: center;
+    padding: 0 10px;
+  }
+  .dayNumber h3,
+  .dayOfWeek h3 {
+    color: var(--hot-blue);
+    text-align: center;
+    font-family: inter;
+    letter-spacing: -0.02em;
+  }
+  .dayNumber h3 {
+    font-size: 50px;
+    line-height: 50px;
+  }
+  .dayOfWeek h3 {
+    color: var(--purple);
+    font-family: inter;
+    line-height: 20px;
+  }
+  .availability {
+    flex: 1;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+  }
+  .slots {
+    flex: 0 1 50px;
+    padding: 10px;
+  }
+}
+.card.unavailable {
+  filter: grayscale(1);
 }

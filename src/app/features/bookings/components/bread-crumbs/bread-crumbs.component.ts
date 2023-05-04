@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { breadFormat } from '../../models/breadCrumbs';
+import { CalendarService } from '../../services/calendar.service';
 
 @Component({
   selector: 'app-bread-crumbs',
@@ -15,19 +16,24 @@ export class BreadCrumbsComponent implements OnInit {
     first: {
       name: 'first',
       link: 'test',
-      active: true
+      active: true,
     },
     second: {
       name: 'second',
       link: 'test',
-      active: true
-    }
-  }
-  constructor(private location: Location) {}
+      active: true,
+    },
+    calendar: true,
+  };
+  constructor(private location: Location, private s_calendar: CalendarService) {}
 
   ngOnInit(): void {}
 
-  goBack(){
-    this.location.back()
+  updateCalendarView(value: boolean) {
+    this.s_calendar.updateCalendarView(value);
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

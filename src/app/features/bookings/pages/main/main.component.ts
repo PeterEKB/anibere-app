@@ -11,7 +11,7 @@ import { CategoriesComponent } from '../categories/categories.component';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit, OnDestroy {
-  component = CategoriesComponent
+  component = CategoriesComponent;
   notifier$: Subject<null> = new Subject();
   private urlArray: string[] = [''];
   bCrumbsFormat: breadFormat = {
@@ -53,6 +53,7 @@ export class MainComponent implements OnInit, OnDestroy {
         // link: '../calendar/time',
         active: false,
       },
+      calendar: true,
     },
     //^ For Confirmation state [2]
     {
@@ -144,6 +145,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.bCrumbsFormat = { ...this.crumbFormats[1] };
     this.bCrumbsFormat.back = true;
     this.bCrumbsFormat.second!.active = true;
+    this.bCrumbsFormat.calendar = false;
   }
   private useReviewFormat() {
     this.bCrumbsFormat = { ...this.crumbFormats[2] };

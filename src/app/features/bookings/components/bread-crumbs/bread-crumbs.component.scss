@@ -1,5 +1,6 @@
 :host {
   display: flex;
+  position: relative;
   align-items: center;
   height: 100%;
   padding-left: 20px;
@@ -12,6 +13,20 @@
 }
 a {
   color: hsla(0, 0%, 40%, 1)!important;
+}
+#calendarView {
+ position: absolute;
+ right: 20px;
+ top: 50%;
+ transform: translateY(-50%);
+}
+#calendarView {
+  display: flex;
+  gap: 5px;
+}
+#calendarView .icon {
+  font-size: 30px;
+  padding: 10px;
 }
 .hide {
   visibility: hidden;

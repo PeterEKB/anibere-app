@@ -1,45 +1,84 @@
 <div id="content" class="col">
 
   <div id="monthNav" class="row">
-    <div id="monthPrev" class="col"><span class="material-symbols-outlined">
+    <div id="monthPrev" class="col monthPagination" [class.disabled]="activeDateIndex <= lowerDateLimit"
+      (click)="paginateMonths(-1)">
+      <span class="material-symbols-outlined icon">
         chevron_Left
-      </span></div>
+      </span>
+    </div>
     <div id="month" class="col">
       <h2>{{activeDate | date: "MMMM"}}</h2>
     </div>
-    <div id="monthNext" class="col"><span class="material-symbols-outlined">
+    <div id="monthNext" class="col monthPagination" [class.disabled]="activeDateIndex >= upperDateLimit"
+      (click)="paginateMonths(1)">
+      <span class="material-symbols-outlined icon">
         chevron_right
-      </span></div>
+      </span>
+    </div>
   </div>
-  <div id="calendar" class="col">
+
+  <div id="dayView" class="col" *ngIf="!(calendarView$ | async)">
+    <ng-container *ngIf="(calendar$ | async) as calendar">
+      <ng-container *ngFor="let _ of calendar.firstDayOfMonth | array">
+        <ng-container #activeDay *ngFor="let _ of calendar.daysInMonth | array; index as dayIndex">
+          <div class="weekOf" *ngIf="(getDayOfTheWeek(dayIndex + 1) | lowercase) === 'sunday' || dayIndex === 0">
+            <h5>Week of {{calendar.month}}/{{dayIndex + 1}}</h5>
+          </div>
+          <div class="cardCon">
+            <div class="card row"
+              [class.unavailable]="dayIndex + 1 < currentDateInfo.today && currentDateInfo.month === calendar.month">
+              <div class="date col">
+                <div class="dayNumber">
+                  <h3>{{dayIndex + 1 | number: '2.0-0'}}</h3>
+                </div>
+                <div class="dayOfWeek">
+                  <h3>{{getDayOfTheWeek(dayIndex + 1) | slice:0:3}}</h3>
+                </div>
+              </div>
+              <div class="availability col">
+                <h3>Day Unavailable</h3>
+              </div>
+              <div class="slots col">
+                <ng-container *ngFor="let _ of 5 | array">
+                  <div class="slot"></div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div id="calendar" class="col" *ngIf="(calendarView$ | async)">
     <div id="daysOfWeek" class="row">
       <ng-container *ngFor="let day of daysOfWeek; index as index">
         <div class="dayOfWeek row">
-          <h2>{{daysOfWeek[index]}}</h2>
+          <h3>{{daysOfWeek[index] | slice:0:2 | titlecase}}</h3>
         </div>
       </ng-container>
     </div>
     <div id="days" class="row">
-      <ng-container *ngFor="let _ of calendar.firstDayOfMonth | array">
-        <div class="day"></div>
+      <ng-container *ngIf="(calendar$ | async) as calendar">
 
-      </ng-container>
-      <ng-container #activeDay *ngFor="let _ of calendar.daysInMonth | array; index as dayIndex">
-        <div class="day col"
-          [class.inactive]="dayIndex + 1 < currentDateInfo.today && currentDateInfo.month === calendar.month"
-          [class.today]="dayIndex + 1 === currentDateInfo.today">
-          <div class="dayTitle">
-            <h6>{{dayIndex + 1}}</h6>
+        <ng-container *ngFor="let _ of calendar.firstDayOfMonth | array">
+          <div class="day"></div>
+        </ng-container>
+        <ng-container #activeDay *ngFor="let _ of calendar.daysInMonth | array; index as dayIndex">
+          <div class="day col"
+            [class.inactive]="dayIndex + 1 < currentDateInfo.today && currentDateInfo.month === calendar.month"
+            [class.today]="dayIndex + 1 === currentDateInfo.today && currentDateInfo.month === calendar.month">
+            <div class="dayTitle">
+              <h6>{{dayIndex + 1}}</h6>
+            </div>
+            <div class="slots col">
+              <ng-container *ngFor="let _ of 5 | array">
+                <div class="slot"></div>
+              </ng-container>
+            </div>
           </div>
-          <div class="slots col">
-            <ng-container *ngFor="let _ of 5 | array">
-              <div class="slot"></div>
-            </ng-container>
-          </div>
-        </div>
-
+        </ng-container>
       </ng-container>
-
     </div>
   </div>
 </div>

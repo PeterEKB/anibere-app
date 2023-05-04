@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ArrayFromNumberPipe implements PipeTransform {
 
-  transform(value: number): Array<any> {
+  transform(value: number | null | string): Array<any> {
     return Array(value);
   }
 

@@ -13,6 +13,7 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
 import { StyleCardComponent } from './components/style-card/style-card.component';
 import { IonicModule } from '@ionic/angular';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TimeComponent } from './pages/time/time.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CalendarComponent,
     ConfirmationComponent,
     StyleCardComponent,
+    TimeComponent,
   ],
   imports: [CommonModule, BookingsRoutingModule, SharedModule, IonicModule.forRoot({})],
 })
