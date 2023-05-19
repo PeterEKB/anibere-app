@@ -74,6 +74,10 @@
 
   .cardCon {
     padding: 0 10px;
+
+    * {
+      pointer-events: none;
+    }
   }
   .card {
     height: 100px;
@@ -112,6 +116,29 @@
     flex: 0 1 50px;
     padding: 10px;
   }
+}
+#cardCon_Today .card {
+  position: relative;
+  border: 3px solid var(--light-blue);
+  box-shadow: 0 0 2px;
+}
+#cardCon_Today .card .slots {
+  filter: grayscale(1);
+}
+.todayTag {
+  display: none;
+  position: absolute;
+  inset: 50% 0 0 50%;
+  width: fit-content;
+  height: fit-content;
+  color: var(--deep-blue);
+  transform: translate(-50%, -50%);
+}
+#cardCon_Today .todayTag {
+  display: block;
+}
+#cardCon_Today .otherTag {
+  display: none;
 }
 .card.unavailable {
   filter: grayscale(1);

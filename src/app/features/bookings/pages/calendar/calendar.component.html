@@ -25,7 +25,7 @@
           <div class="weekOf" *ngIf="(getDayOfTheWeek(dayIndex + 1) | lowercase) === 'sunday' || dayIndex === 0">
             <h5>Week of {{calendar.month}}/{{dayIndex + 1}}</h5>
           </div>
-          <div class="cardCon">
+          <div class="cardCon" [attr.data-day]="calendar.month + '' + (dayIndex + 1)" #cardCon>
             <div class="card row"
               [class.unavailable]="dayIndex + 1 < currentDateInfo.today && currentDateInfo.month === calendar.month">
               <div class="date col">
@@ -37,7 +37,8 @@
                 </div>
               </div>
               <div class="availability col">
-                <h3>Day Unavailable</h3>
+                <h3 class="todayTag">Today</h3>
+                <h3 class="otherTag">Day Unavailable</h3>
               </div>
               <div class="slots col">
                 <ng-container *ngFor="let _ of 5 | array">

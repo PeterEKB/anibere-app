@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CalendarService {
-  private $calendarView: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  private $calendarView: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   public calendarView$: Observable<boolean> = this.$calendarView;
 

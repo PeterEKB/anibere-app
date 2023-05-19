@@ -1,5 +1,12 @@
 import { WeekDay } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CalendarService } from '../../services/calendar.service';
 
@@ -52,14 +59,35 @@ export class CalendarComponent implements OnInit {
   });
   public calendar$: Observable<any> = this.$calendar;
 
+  @ViewChildren('cardCon') dayCards!: QueryList<ElementRef>;
+  today!: ElementRef | undefined;
+
   constructor(private s_calendar: CalendarService) {
     this.calendarView$ = this.s_calendar.calendarView$;
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+  ngAfterViewInit() {
+    this.today = this.dayCards.find((el: ElementRef) => {
+      const todayVal = `${this.currentDateInfo.month}${this.currentDateInfo.today}`,
+        eleDayAttr = el.nativeElement.getAttribute('data-day');
 
+      return todayVal === eleDayAttr;
+    });
+    this.styleTodayCard();
+    if(this.today)
+      this.today.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+      });
   }
 
+  styleTodayCard() {
+    if (this.today && this.currentDateInfo.monthIndex === this.activeDate.getMonth()) {
+      this.today.nativeElement.id = 'cardCon_Today';
+    } else if (this.today) {
+      this.today.nativeElement.id = '';
+    }
+  }
   getDaysInMonth(month: number, year: number) {
     return new Date(year, month, 0).getDate();
   }
@@ -81,6 +109,7 @@ export class CalendarComponent implements OnInit {
       console.log(this.activeDateIndex);
     }
     this.updateActiveDate();
+    this.styleTodayCard();
   }
   updateActiveDate() {
     this.activeDate = new Date(
@@ -112,5 +141,13 @@ export class CalendarComponent implements OnInit {
       dayOfWeek: number = date.getDay();
 
     return this.daysOfWeek[dayOfWeek];
+  }
+  public scrollToDay(event: Event) {
+    let target: HTMLElement = event.target as HTMLElement;
+    console.log(target, event);
+
+    target.scrollIntoView({
+      behavior: 'smooth',
+    });
   }
 }

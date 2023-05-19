@@ -14,10 +14,6 @@ export class MainComponent implements OnInit {
   constructor(private readonly userService: UserService) {}
 
   ngOnInit(): void {
-    this.user$ = new Observable((observer) => {
-      this.userService.user$.subscribe((x) => {
-        observer.next(x);
-      });
-    });
+    this.user$ = this.userService.user$
   }
 }

@@ -23,6 +23,7 @@ import {
   Variant,
   Option,
 } from '../../models/service-structure.interface';
+import { StyleCardClicked } from '../../models/style-card-clicked';
 import { BookingStyleService } from '../../services/booking-style.service';
 
 @Component({
@@ -80,8 +81,7 @@ export class StyleCardComponent implements OnInit {
     this._service(val);
   }
 
-  @Output() clicked: EventEmitter<{ event: string; value: any }> =
-    new EventEmitter();
+  @Output() clicked: EventEmitter<StyleCardClicked> = new EventEmitter();
 
   constructor(
     private s_style: BookingStyleService,
@@ -96,14 +96,14 @@ export class StyleCardComponent implements OnInit {
 
     this.cardClick$ = fromEvent(this.card.nativeElement, 'click');
 
-    this.cardClick$.pipe(takeUntil(this.notifier$)).subscribe((_) => {
-      this.emitClick();
+    this.cardClick$.pipe(takeUntil(this.notifier$)).subscribe((event) => {
+      this.emitClick(event);
     });
   }
   ngOnDestroy(): void {
     this.stopObs();
   }
-  stopObs(){
+  stopObs() {
     this.notifier$.next(null);
     this.notifier$.complete();
   }
@@ -122,10 +122,14 @@ export class StyleCardComponent implements OnInit {
     };
     return true;
   }
-  emitClick() {
+  emitClick(event: Event) {
     this.clicked.emit({
       event: 'click',
-      value: { sku: this.service.sku, selectedVariants: this.selectedVariants },
+      value: {
+        sku: this.service.sku,
+        selectedVariants: this.selectedVariants,
+      },
+      nativeEvent: event,
     });
   }
   trayInit() {
